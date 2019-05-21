@@ -14,20 +14,27 @@ RUN curl -L -O "https://github.com/PhantomBot/PhantomBot/releases/download/v${PH
 # production
 FROM openjdk:8-jre-alpine
 
-# botuser
-RUN addgroup botuser
-RUN adduser -D botuser --ingroup botuser
+# update ssl/certs
+RUN apk update \
+  && apk add --no-cache ca-certificates \
+  && apk add --no-cache openssl
 
 # copy from builder
-RUN mkdir /home/botuser/phantombot
-WORKDIR /home/botuser/phantombot
-COPY --from=builder /phantombot ./ 
-RUN chmod u+x launch-service.sh launch.sh \
-  && chown -R botuser:botuser *
+RUN mkdir /phantombot
+WORKDIR /phantombot
+COPY --from=builder /phantombot ./
+
+# entry point
+COPY ./entrypoint.sh ./
+
+# botlogin
+COPY ./botlogin.txt ./config/
+
+# update perms
+RUN chmod u+x launch-service.sh launch.sh entrypoint.sh
 
 # expose comms and panel
 EXPOSE 25000 25001 25002 25003 25004 25005
 
 # run
-USER botuser
-CMD ["sh", "launch-service.sh"] 
+ENTRYPOINT ["/phantombot/entrypoint.sh"]

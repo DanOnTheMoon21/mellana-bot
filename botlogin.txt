@@ -1,0 +1,14 @@
+#PhantomBot Configuration File
+#apioauth=oauth\:$PHANTOMBOT_APIOAUTH
+baseport=25000
+#channel=$PHANTOMBOT_CHANNEL
+msglimit30=19.0
+musicenable=true
+#oauth=oauth\:$PHANTOMBOT_OAUTH
+#owner=$PHANTOMBOT_OWNER
+#panelpassword=$PHANTOMBOT_PANELPASSWORD
+#paneluser=$PHANTOMBOT_PANELUSER
+usehttps=false
+#user=$PHANTOMBOT_USER
+webenable=true
+whisperlimit60=60.0
