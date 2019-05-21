@@ -28,7 +28,7 @@ Helper to release major, minor, patch versions.
 - Git commit with version
 - Git tag said commit
 - Docker tag built image with version
-- Heroku push and release tagged image
+- Push to docker hub
 
 ```sh
 ./.dev/release.sh {major|minor|patch}

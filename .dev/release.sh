@@ -2,11 +2,13 @@
 
 DOCKER_NAME="${DOCKER_NAME:=mb}"
 DOCKER_TAG="${DOCKER_TAG:=prod}"
+DOCKER_REPO="${DOCKER_REPO:=danonthemoon21/mellana-bot}"
 
 cd $(git rev-parse --show-toplevel)
 
-# build docker image
+# build prod docker image
 source ./.dev/docker.sh build
+source ./.dev/docker.sh push
 
 # bump version
 current_version=$(cat .version)
@@ -43,7 +45,8 @@ echo $new_version > .version
 git add .
 git commit -m "$new_version"
 git tag "v$new_version"
-git push --follow-tags
+git push && git push --tags
 
-# docker tag
+# docker tag & push
 docker tag "$DOCKER_NAME:$DOCKER_TAG" "$DOCKER_NAME:$new_version"
+docker push "$DOCKER_REPO:$new_version"

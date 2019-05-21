@@ -3,6 +3,7 @@
 DOCKER_NAME="${DOCKER_NAME:=mb}"
 DOCKER_TAG="${DOCKER_TAG:=dev}"
 DOCKER_CONTAINER_NAME="${DOCKER_CONTAINER_NAME:=mellanabot}"
+DOCKER_REPO="${DOCKER_REPO:=danonthemoon21/mellana-bot}"
 
 PHANTOMBOT_APIOAUTH="${PHANTOMBOT_APIOAUTH:=\"\"}"
 PHANTOMBOT_CHANNEL="${PHANTOMBOT_CHANNEL:=mellanatest}"
@@ -31,6 +32,9 @@ case "$1" in
     ;;
   stop)
     docker stop "$DOCKER_CONTAINER_NAME"
+    ;;
+  push)
+    docker push "$DOCKER_REPO:$DOCKER_TAG"
     ;;
   *)
     echo "Usage: $0 {build|run|stop}"
