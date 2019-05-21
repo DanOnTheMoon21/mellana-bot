@@ -6,7 +6,7 @@ DOCKER_TAG="${DOCKER_TAG:=prod}"
 cd $(git rev-parse --show-toplevel)
 
 # build docker image
-./.dev/docker build
+source ./.dev/docker.sh build
 
 # bump version
 current_version=$(cat .version)
@@ -42,9 +42,8 @@ echo $new_version > .version
 # git commit and tag
 git add .
 git commit -m "$new_version"
-git push
 git tag "v$new_version"
-git push origin "v$new_version"
+git push --follow-tags
 
 # docker tag
 docker tag "$DOCKER_NAME:$DOCKER_TAG" "$DOCKER_NAME:$new_version"
