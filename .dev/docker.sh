@@ -36,7 +36,10 @@ case "$1" in
   push)
     docker push "$DOCKER_REPO:$DOCKER_TAG"
     ;;
+  tag)
+    docker tag "$DOCKER_NAME:$DOCKER_TAG" "$DOCKER_REPO:$DOCKER_TAG"
+    ;;
   *)
-    echo "Usage: $0 {build|run|stop}"
+    echo "Usage: $0 {build|run|stop|push|tag}"
     exit 1
 esac

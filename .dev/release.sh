@@ -8,6 +8,7 @@ cd $(git rev-parse --show-toplevel)
 
 # build prod docker image
 source ./.dev/docker.sh build
+source ./.dev/docker.sh tag
 source ./.dev/docker.sh push
 
 # bump version
@@ -49,4 +50,5 @@ git push && git push --tags
 
 # docker tag & push
 docker tag "$DOCKER_NAME:$DOCKER_TAG" "$DOCKER_NAME:$new_version"
+docker tag "$DOCKER_NAME:$new_version" "$DOCKER_REPO:$new_version"
 docker push "$DOCKER_REPO:$new_version"
